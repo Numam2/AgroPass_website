@@ -1,243 +1,781 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AgroPass | Automatización EUDR para Exportadores</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2D5A27; /* Verde Bosque */
-            --secondary: #1A3C34; /* Verde Oscuro */
-            --accent: #D4AF37; /* Dorado */
-            --danger: #e74c3c;
-            --light: #F8FAF7;
-            --dark: #1E1E1E;
+            --primary: #2D5A27;
+            --dark-bg: #0a0d0a;
+            /* Fondo ultra oscuro estilo premium */
+            --accent: #D4AF37;
+            --light-gray: #f4f7f4;
             --white: #ffffff;
-            --transition: all 0.3s ease;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Segoe UI', sans-serif; }
-        html { scroll-behavior: smooth; }
-        body { background-color: var(--white); color: var(--dark); line-height: 1.6; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
 
-        /* Componentes Reutilizables */
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 5%; }
-        .btn { padding: 12px 28px; border-radius: 6px; text-decoration: none; font-weight: 600; transition: var(--transition); display: inline-block; cursor: pointer; border: none; }
-        .btn-main { background: var(--accent); color: var(--secondary); }
-        .btn-main:hover { background: #c19b2e; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); }
-        .btn-outline { border: 2px solid var(--white); color: var(--white); margin-left: 10px; }
-        
-        /* Header */
-        header { background: rgba(255,255,255,0.95); padding: 1rem 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        nav { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.6rem; font-weight: 800; color: var(--primary); }
-        .logo span { color: var(--secondary); font-weight: 400; }
+        html {
+            scroll-behavior: smooth;
+        }
 
-        /* Hero Section */
-        .hero { background: linear-gradient(rgba(26, 60, 52, 0.85), rgba(26, 60, 52, 0.85)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=2000') center/cover; color: var(--white); padding: 120px 0; text-align: center; }
-        .hero h1 { font-size: 3.2rem; margin-bottom: 20px; line-height: 1.2; }
-        .hero p { font-size: 1.25rem; margin-bottom: 40px; max-width: 700px; margin-inline: auto; opacity: 0.9; }
+        body {
+            background-color: var(--white);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-        /* Why Us Section */
-        .why-us { background: #fff5f5; padding: 60px 0; border-bottom: 1px solid #ffebeb; }
-        .warning-box { background: white; padding: 30px; border-radius: 12px; border-left: 5px solid var(--danger); box-shadow: 0 4px 20px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 30px; }
-        .warning-box i { font-size: 3rem; color: var(--danger); }
-        .warning-text h3 { color: var(--danger); margin-bottom: 5px; }
+        /* --- NAVEGACIÓN --- */
+        header {
+            padding: 1.2rem 0;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
 
-        /* Features Section */
-        .section { padding: 100px 0; }
-        .section-title { text-align: center; margin-bottom: 60px; }
-        .section-title h2 { font-size: 2.2rem; color: var(--secondary); margin-bottom: 15px; }
-        
-        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
-        .feature-card { padding: 40px; border-radius: 15px; background: var(--light); border: 1px solid #eee; transition: var(--transition); }
-        .feature-card:hover { transform: translateY(-10px); background: white; border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .feature-card i { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; }
-        .feature-card h3 { margin-bottom: 15px; color: var(--secondary); }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
 
-        /* UX Flow Section */
-        .flow-bg { background: var(--secondary); color: white; padding: 80px 0; }
-        .flow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; position: relative; }
-        .flow-step { text-align: center; position: relative; }
-        .step-num { width: 50px; height: 50px; background: var(--accent); color: var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin: 0 auto 20px; font-size: 1.2rem; }
-        .flow-step h3 { margin-bottom: 10px; }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -1px;
+        }
 
-        /* FAQ Section */
-        .faq-section { background: var(--white); }
-        .faq-grid { max-width: 800px; margin: 0 auto; }
-        details { background: var(--light); padding: 20px; border-radius: 8px; margin-bottom: 15px; cursor: pointer; }
-        summary { font-weight: 600; color: var(--secondary); list-style: none; display: flex; justify-content: space-between; align-items: center; }
-        summary::after { content: '+'; font-size: 1.5rem; }
-        details[open] summary::after { content: '-'; }
-        details p { margin-top: 15px; font-size: 0.95rem; color: #555; }
+        .logo span {
+            color: #1a3c34;
+        }
 
-        /* CTA/Form Section */
-        .cta-box { background: var(--light); padding: 60px; border-radius: 24px; text-align: center; }
-        form { max-width: 500px; margin: 30px auto 0; display: grid; gap: 15px; }
-        input, select, textarea { padding: 14px; border: 1px solid #ddd; border-radius: 8px; width: 100%; font-size: 1rem; }
-        
-        footer { background: var(--secondary); color: white; padding: 60px 0 30px; text-align: center; }
-        .footer-bottom { margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.8rem; opacity: 0.7; }
+        /* --- HERO CON VIDEO --- */
+        /* .hero {
+            position: relative;
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        } */
+
+        .hero {
+            position: relative;
+            height: 120vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+            /* Eliminamos cualquier margen inferior para que no haya líneas blancas raras */
+            margin-bottom: 0;
+        }
+
+        /* EL TRUCO: El degradado de oscuro a blanco */
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            /* Altura del degradado: 20% o 30% del alto del hero suele verse bien */
+            height: 35vh;
+            /* El degradado va de transparente (arriba) al color de la siguiente sección (blanco abajo) */
+            background: linear-gradient(to bottom, rgba(10, 13, 10, 0) 0%, #ffffff 100%);
+            z-index: 2;
+            /* Por encima del video y del overlay de texto */
+        }
+
+        /* Aseguramos que el contenido del texto esté por encima de todo */
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) 30%, rgba(10, 13, 10, 0.4) 100%);
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 25px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 35px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .btn {
+            padding: 16px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-block;
+            border: none;
+        }
+
+        .btn-main {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .btn-main:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        /* --- SECCIÓN FUNCIONES (MODERNA) --- */
+        .section {
+            background-color: #ffffff;
+            /* Asegura que sea blanco puro */
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin-top: 40px;
+            margin: auto;
+            padding: 0 5%;
+        }
+
+        .text-container {
+            background-color: rgb(40, 53, 31);
+            color: white;
+            /* Asegura que sea blanco puro */
+            position: relative;
+            z-index: 1;
+            margin-top: 40px;
+            margin-left: 10%;
+            margin-right: 10%;
+            border-radius: 40px;
+            padding: 80px;            
+        }
 
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.2rem; }
-            .warning-box { flex-direction: column; text-align: center; }
-            .btn-outline { margin: 10px 0 0 0; display: block; }
+            .text-container{
+                margin-left: 5%;
+            margin-right: 5%;
+                padding: 40px; 
+            }
+        }
+
+        .box {
+            height: 120px;
+            width: 100%;
+        }
+
+        /* --- SECCIÓN TECNOLOGÍA ALTERNADA --- */
+        .tech-features {
+            background-color: #ffffff;
+        }
+
+        .section-main-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 80px;
+            color: var(--secondary);
+        }
+
+        .feature-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 80px;
+            margin-bottom: 100px;
+            /* Espacio entre filas */
+        }
+
+        /* AQUÍ ESTÁ EL TRUCO: Alterna las filas pares */
+        .feature-row:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .feature-content {
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            background: rgba(45, 90, 39, 0.1);
+            /* Verde suave */
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+        }
+
+        .feature-content h3 {
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .feature-content p {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .feature-image {
+            flex: 1;
+        }
+
+        .feature-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 40px;
+            /* Bordes muy redondeados estilo Grazemate */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+        }
+
+        .feature-image img:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 992px) {
+
+            .feature-row,
+            .feature-row:nth-child(even) {
+                flex-direction: column;
+                /* Todo a una columna en tablets/móviles */
+                gap: 40px;
+                text-align: center;
+            }
+
+            .feature-content {
+                max-width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .feature-image img {
+                height: 300px;
+            }
+
+            .section-main-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        /*----- SECCION DEL FLUJO ----*/
+        .flow-section {
+            background-color: #ffffff;
+        }
+
+        .flow-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            font-weight: 800;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .step-card {
+            position: relative;
+            height: 450px;
+            border-radius: 32px;
+            /* Bordes bien redondeados estilo Grazemate */
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        /* El oscurecimiento de la imagen */
+        .step-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 10%, rgba(0, 0, 0, 0.2) 60%, transparent 100%);
+            transition: background 0.4s ease;
+            z-index: 1;
+        }
+
+        .step-content {
+            position: relative;
+            z-index: 2;
+            padding: 40px;
+            width: 100%;
+            color: white;
+            transition: transform 0.4s ease;
+        }
+
+        .step-number {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .step-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            transition: transform 0.4s ease;
+        }
+
+        /* La descripción oculta por defecto */
+        .step-description {
+            max-height: 0;
+            opacity: 0;
+            transition: all 0.4s ease;
+            overflow: hidden;
+        }
+
+        .step-description p {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* --- EFECTO HOVER --- */
+
+        .step-card:hover {
+            transform: scale(1.02);
+        }
+
+        .step-card:hover .step-overlay {
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 30%, rgba(0, 0, 0, 0.4) 100%);
+        }
+
+        .step-card:hover .step-content {
+            transform: translateY(-20px);
+            /* El contenido sube un poco */
+        }
+
+        .step-card:hover .step-description {
+            max-height: 150px;
+            /* Se expande */
+            opacity: 1;
+            margin-top: 10px;
+        }
+
+        /* --- PROCESO DINÁMICO --- */
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 60px;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+            padding: 20px;
+        }
+
+        .step-number {
+            font-size: 5rem;
+            font-weight: 800;
+            color: var(--light-gray);
+            position: absolute;
+            top: -40px;
+            left: 0;
+            z-index: -1;
+        }
+
+        .step h3 {
+            margin-top: 20px;
+            font-size: 1.5rem;
+        }
+
+        /* --- FAQ --- */
+        .faq-container {
+            max-width: 800px;
+            margin: 50px auto;
+        }
+
+        details {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding: 20px 0;
+        }
+
+        summary {
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        summary::after {
+            content: "→";
+            transition: 0.3s;
+            color: var(--accent);
+        }
+
+        details[open] summary::after {
+            transform: rotate(90deg);
+        }
+
+        details p {
+            padding-top: 15px;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* --- CONTACTO --- */
+        .contact-wrapper {
+            background: var(--dark-bg);
+            color: white;
+            border-radius: 40px;
+            padding: 80px 5%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        input,
+        select,
+        textarea {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 18px;
+            border-radius: 12px;
+            color: white;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        /* --- FOOTER CON VIDEO --- */
+        footer {
+            margin-top: 120px;
+            position: relative;
+            padding: 100px 0 50px;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .footer-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(0deg, rgba(10, 13, 10, 0.9) 0%, rgba(10, 13, 10, 0.3) 75%);
+            z-index: 0;
+        }
+
+
+        .footer-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <header>
-        <div class="container">
-            <nav>
-                <div class="logo">AGRO<span>PASS</span></div>
-                <div class="nav-links">
-                    <a href="#features" style="text-decoration:none; color:var(--secondary); margin-right:20px; font-weight:500;">Producto</a>
-                    <a href="#contacto" class="btn btn-main">Probar Gratis</a>
-                </div>
-            </nav>
-        </div>
+        <nav>
+            <div class="logo">AGRO<span>PASS</span></div>
+            <a href="#contacto" class="btn btn-main" style="padding: 10px 20px;">Demo</a>
+        </nav>
     </header>
 
     <section class="hero">
-        <div class="container">
-            <h1>Exporta a la Unión Europea con <br><span style="color:var(--accent)">Cero riesgo de rechazo</span></h1>
-            <p>Automatiza tu Debida Diligencia para EUDR. Desde la geolocalización en el campo hasta el Reference ID en el puerto, gestionamos todo el flujo en una sola plataforma.</p>
+        <video autoplay muted loop playsinline poster="assets/Hero Img.PNG" class="hero-video">
+            <source src="assets/Hero Video.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Exporta a la UE con absoluta confianza.</h1>
+            <p>Automatizamos el cumplimiento de la normativa EUDR para que tu única preocupación sea seguir creciendo.
+            </p>
             <div class="hero-btns">
-                <a href="#contacto" class="btn btn-main">Quiero saber más</a>
-                <a href="#contacto" class="btn btn-outline">Calcular mi riesgo gratis</a>
+                <a href="#contacto" class="btn btn-main">Comenzar ahora</a>
             </div>
         </div>
     </section>
 
-    <section class="why-us">
-        <div class="container">
-            <div class="warning-box">
-                <i class="fas fa-exclamation-triangle"></i>
-                <div class="warning-text">
-                    <h3>¿Sabías que un error manual puede ser fatal?</h3>
-                    <p>Una falla en la declaración puede costar multas de hasta el <strong>4% de tu facturación anual</strong> y la retención total de la mercadería. Nosotros eliminamos las hojas de cálculo y el riesgo del "copia-y-pega".</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <section class="box"></section>
 
-    <section id="features" class="section">
+    <section class="section tech-features">
         <div class="container">
-            <div class="section-title">
-                <h2>Tecnología de precisión para EUDR</h2>
-                <p>Cumplir con el Reglamento de Deforestación de la UE nunca fue tan simple.</p>
-            </div>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <i class="fas fa-satellite"></i>
-                    <h3>Validación de Polígonos con IA</h3>
-                    <p>Analizamos imágenes satelitales en tiempo real para confirmar que tus lotes están 100% libres de deforestación post-2020.</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-link"></i>
-                    <h3>Conexión Directa (API)</h3>
-                    <p>Generamos y enviamos tu DDS directamente al sistema TRACES de la UE. Obtén tu Reference ID en segundos.</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-chart-line"></i>
-                    <h3>Score de Riesgo Inteligente</h3>
-                    <p>Nuestro algoritmo evalúa cada carga y te alerta sobre posibles conflictos legales antes de que el barco zarpe.</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-shield-alt"></i>
-                    <h3>Archivo "Anti-Multas"</h3>
-                    <p>Guardamos toda la evidencia documental y satelital por 5 años, lista para cualquier auditoría internacional.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+            <h2 class="section-main-title">Tecnología para el nuevo estándar global</h2>
 
-    <section class="flow-bg">
-        <div class="container">
-            <div class="section-title">
-                <h2 style="color:white">Flujo UX en 3 Pasos</h2>
+            <div class="feature-row">
+                <div class="feature-content">
+                    <div class="icon-box"><i class="fas fa-satellite-dish"></i></div>
+                    <h3>Monitoreo Satelital</h3>
+                    <p>Análisis de deforestación en tiempo real con precisión milimétrica sobre cada polígono.
+                        Utilizamos constelaciones de satélites para auditar tus tierras los 365 días del año.</p>
+                </div>
+                <div class="feature-image">
+                    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=1000"
+                        alt="Satelital">
+                </div>
             </div>
-            <div class="flow-grid">
-                <div class="flow-step">
-                    <div class="step-num">1</div>
-                    <h3>Sincroniza</h3>
-                    <p>Importa tus proveedores desde VISEC o directamente desde tu ERP.</p>
+
+            <div class="feature-row">
+                <div class="feature-content">
+                    <div class="icon-box"><i class="fas fa-shield-virus"></i></div>
+                    <h3>Mitigación de Riesgos</h3>
+                    <p>Alertas preventivas antes de que cualquier carga sea comprometida legalmente. Analizamos el
+                        histórico y el contexto social para que tu exportación sea 100% segura.</p>
                 </div>
-                <div class="flow-step">
-                    <div class="step-num">2</div>
-                    <h3>Valida</h3>
-                    <p>Nuestro motor de riesgo audita cada hectárea automáticamente bajo estándares UE.</p>
+                <div class="feature-image">
+                    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=1000"
+                        alt="Riesgos">
                 </div>
-                <div class="flow-step">
-                    <div class="step-num">3</div>
-                    <h3>Exporta</h3>
-                    <p>Firma digitalmente tu DDS y recibe el visto bueno de la UE en tiempo real.</p>
+            </div>
+
+            <div class="feature-row">
+                <div class="feature-content">
+                    <div class="icon-box"><i class="fas fa-file-contract"></i></div>
+                    <h3>DDS Automático</h3>
+                    <p>Generación de declaraciones de debida diligencia listas para el sistema TRACES. Olvida la carga
+                        manual; nuestra plataforma conecta tus datos directamente con la UE.</p>
+                </div>
+                <div class="feature-image">
+                    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=1000"
+                        alt="Contratos">
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="section faq-section">
+    <section class="text-container">
+        <h4 style="text-align: center; margin-bottom: 30px; font-size: 2rem; font-weight: 800;">
+            Una solución completa para EUDR</h4>
+        <p style="text-align: center">
+            AgroPass te ayuda a gestionar EUDR de principio a fin. Automatizamos la recolección de datos, analizamos el
+            riesgo y documentación de cada uno de tus proveedores, mapeamos y monitoriamos los lotes, te ayudamos a
+            mitigar el riesgo y te dejamos todo listo para reportes y auditorías</p>
+    </section>
+
+    <section class="box"></section>
+
+    <section class="section flow-section">
         <div class="container">
-            <div class="section-title">
-                <h2>Preguntas Frecuentes</h2>
-            </div>
-            <div class="faq-grid">
-                <details>
-                    <summary>¿Si ya uso VISEC, por qué necesito AgroPass?</summary>
-                    <p>Porque VISEC es una base de datos, no una herramienta de gestión. Nosotros tomamos esos datos, los auditamos y los convertimos en el documento legal (DDS) que la UE exige para permitir el ingreso de tu mercadería.</p>
-                </details>
-                <details>
-                    <summary>¿Qué pasa si mi carga es rechazada?</summary>
-                    <p>Nuestra plataforma incluye un check-list de pre-embarque y validación satelital que minimiza las probabilidades de rechazo al 0.1%.</p>
-                </details>
-                <details>
-                    <summary>¿Obtengo una certificación oficial?</summary>
-                    <p>No, la plataforma es netamente de gestión y automatización con el objetivo de facilitar y reducir la carga administrativa que implica el cumplimiento con EUDR.</p>
-                </details>
-                <details>
-                    <summary>¿AgroPass asume la responsabilidad legal?</summary>
-                    <p>El servicio asume el rol de “Best Effort Compliance”, garantizando el análisis de riesgo más preciso basado en los datos suministrados. El usuario sigue siendo el responsable legal de la veracidad de la información introducida.</p>
-                </details>
+            <h2 class="flow-title">Tu flujo hacia Europa</h2>
+            <div class="process-grid">
+
+                <div class="step-card"
+                    style="background-image: url('https://images.unsplash.com/photo-1586771107445-d3ca888129ff?auto=format&fit=crop&q=80&w=800')">
+                    <div class="step-overlay"></div>
+                    <div class="step-content">
+                        <span class="step-number">01</span>
+                        <h3>Conecta</h3>
+                        <div class="step-description">
+                            <p>Integra tus proveedores y carga tu documentación y datos de geolocalización fácilmente
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-card"
+                    style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800')">
+                    <div class="step-overlay"></div>
+                    <div class="step-content">
+                        <span class="step-number">02</span>
+                        <h3>Verifica</h3>
+                        <div class="step-description">
+                            <p>Nuestra IA audita el cumplimiento de cada hectárea y la integridad de cada documento que
+                                pide la EUDR</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-card"
+                    style="background-image: url('https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format&fit=crop&q=80&w=800')">
+                    <div class="step-overlay"></div>
+                    <div class="step-content">
+                        <span class="step-number">03</span>
+                        <h3>Exporta</h3>
+                        <div class="step-description">
+                            <p>Genera la DDS con un click, obtén tu Reference ID oficial y toda la documentación
+                                organizada y almacenada por envío</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
-    <section id="contacto" class="section">
-        <div class="container">
-            <div class="cta-box">
-                <h2>Asegura tu mercado en Europa hoy mismo</h2>
-                <p>Déjanos tus datos para una demo personalizada de la plataforma.</p>
-                <form>
-                    <input type="text" placeholder="Nombre y Apellido" required>
-                    <input type="email" placeholder="Email Corporativo" required>
-                    <select required>
-                        <option value="">Selecciona tu producto principal</option>
-                        <option value="soja">Soja</option>
-                        <option value="carne">Carne Vacuna</option>
-                        <option value="madera">Madera / Papel</option>
-                        <option value="otros">Otros</option>
-                    </select>
-                    <textarea placeholder="¿Cuántas exportaciones realizas al año aproximadamente?" rows="3"></textarea>
-                    <button type="submit" class="btn btn-main">Solicitar Diagnóstico Gratuito</button>
-                </form>
+    <section class="box"></section>
+
+    <section class="section container">
+        <h2 style="text-align: center;">Preguntas Frecuentes</h2>
+        <div class="faq-container">
+            <details>
+                <summary>¿Cómo garantiza AgroPass el cumplimiento?</summary>
+                <p>Utilizamos una combinación de APIs oficiales de la UE y análisis satelital de alta resolución para
+                    asegurar que cada dato sea verídico y auditable.</p>
+            </details>
+            <details>
+                <summary>¿Si ya uso VISEC, por qué necesito AgroPass?</summary>
+                <p>Porque VISEC es una base de datos, no una herramienta de gestión. Nosotros tomamos esos datos, los
+                    auditamos y los convertimos en el documento legal (DDS) que la UE exige para permitir el ingreso de
+                    tu mercadería.</p>
+            </details>
+            <details>
+                <summary>¿Qué pasa si mi carga es rechazada?</summary>
+                <p>Nuestra plataforma incluye un check-list de pre-embarque y validación satelital que minimiza las
+                    probabilidades de rechazo al 0.1%.</p>
+            </details>
+            <details>
+                <summary>¿Obtengo una certificación oficial?</summary>
+                <p>No, la plataforma es netamente de gestión y automatización con el objetivo de facilitar y reducir la
+                    carga administrativa que implica el cumplimiento con EUDR.</p>
+            </details>
+            <details>
+                <summary>¿AgroPass asume la responsabilidad legal?</summary>
+                <p>El servicio asume el rol de “Best Effort Compliance”, garantizando el análisis de riesgo más preciso
+                    basado en los datos suministrados. El usuario sigue siendo el responsable legal de la veracidad de
+                    la información introducida.</p>
+            </details>
+        </div>
+    </section>
+
+    <section class="box"></section>
+
+    <section id="contacto" class="section container">
+        <div class="contact-wrapper">
+            <div id="contact-info">
+                <h2 style="font-size: 3rem; margin-bottom: 20px;">¿Listo para automatizar?</h2>
+                <p style="opacity: 0.7;">Agenda una sesión estratégica con nuestros expertos en normativa EUDR.</p>
+            </div>
+
+            <form id="form-eudr">
+                <!-- https://app.web3forms.com/dashboard -->
+                <input type="hidden" name="access_key" value="88a1bce6-e6c8-4970-a491-3022970d5374">
+
+                <input type="text" name="name" placeholder="Nombre completo" required>
+                <input type="email" name="email" placeholder="Email corporativo" required>
+
+                <select name="commodity" required>
+                    <option value="" disabled selected>Selecciona un commodity EUDR</option>
+                    <option style="color: black" value="soja">Soja (Granos, Harina, Aceite)</option>
+                    <option style="color: black" value="carne">Carne Vacuna y Cuero</option>
+                    <option style="color: black" value="madera">Madera, Papel y Celulosa</option>
+                    <option style="color: black" value="cafe">Café</option>
+                    <option style="color: black" value="cacao">Cacao y Chocolate</option>
+                    <option style="color: black" value="caucho">Caucho (Neumáticos y derivados)</option>
+                    <option style="color: black" value="palma">Palma Aceitera</option>
+                </select>
+
+                <button type="submit" id="submit-btn" class="btn btn-main" style="width: 100%;">Solicitar Demo
+                    Gratis</button>
+            </form>
+
+            <div id="success-msg" style="display: none; text-align: center; padding: 40px;">
+                <div style="font-size: 4rem; color: var(--accent); margin-bottom: 20px;">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2 style="color: white; margin-bottom: 10px;">¡Solicitud recibida!</h2>
+                <p style="color: rgba(255,255,255,0.7);">Un consultor experto en EUDR te contactará en las próximas 24
+                    horas.</p>
             </div>
         </div>
     </section>
 
     <footer>
-        <div class="container">
-            <div class="logo" style="color:white; margin-bottom: 20px;">AGRO<span>PASS</span></div>
+        <img alt="AgroPass" loading="lazy" decoding="async" data-nimg="fill" class="object-cover"
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; opacity: 0.4;"
+            src="assets/Hero Img.PNG"> </img>
+        <div class="footer-overlay"></div>
+        <div class="footer-content">
+            <div class="logo" style="color: white; margin-bottom: 20px;">AGRO<span>PASS</span></div>
             <p>Inteligencia ambiental para el comercio global.</p>
-            <p>Buenos Aires, Argentina | Contacto: info@agropass.com</p>
-            <div class="footer-bottom">
-                &copy; 2026 AgroPass. Todos los derechos reservados.
-            </div>
+            <p style="margin-top: 20px; font-size: 0.8rem; opacity: 0.6;">© 2026 AgroPass. Built for the future of
+                farming.</p>
         </div>
     </footer>
 
+    <script src="script.js"></script>
 </body>
+
 </html>
