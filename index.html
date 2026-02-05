@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/favicon-32x32.png">
     <title>AgroPass | Automatización EUDR para Exportadores</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -61,8 +62,8 @@
             letter-spacing: -1px;
         }
 
-        .logo span {
-            color: white;
+        .logo img {
+            height: 50px;
         }
 
         /* --- HERO CON VIDEO --- */
@@ -199,14 +200,14 @@
             margin-left: 10%;
             margin-right: 10%;
             border-radius: 40px;
-            padding: 80px;            
+            padding: 80px;
         }
 
         @media (max-width: 768px) {
-            .text-container{
+            .text-container {
                 margin-left: 5%;
-            margin-right: 5%;
-                padding: 40px; 
+                margin-right: 5%;
+                padding: 40px;
             }
         }
 
@@ -281,7 +282,7 @@
         .feature-image img {
             width: 100%;
             height: 400px;
-            object-fit:contain;
+            object-fit: contain;
             border-radius: 40px;
             /* Bordes muy redondeados estilo Grazemate */
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
@@ -557,7 +558,9 @@
 
     <header>
         <nav>
-            <div class="logo">AGRO<span>PASS</span></div>
+            <div class="logo">
+                <img src="assets/logo_agropass.png" alt="AgroPass">
+            </div>
             <a href="#contacto" class="btn btn-main" style="padding: 10px 20px;">Demo</a>
         </nav>
     </header>
@@ -591,8 +594,7 @@
                         Utilizamos constelaciones de satélites para auditar tus tierras los 365 días del año.</p>
                 </div>
                 <div class="feature-image">
-                    <img src="assets/Campo2.PNG"
-                        alt="Satelital">
+                    <img src="assets/Campo2.PNG" alt="Satelital">
                 </div>
             </div>
 
@@ -604,8 +606,7 @@
                         histórico y el contexto legal y social para que tu exportación sea segura.</p>
                 </div>
                 <div class="feature-image">
-                    <img src="assets/riesgos1.PNG"
-                        alt="Riesgos">
+                    <img src="assets/riesgos1.PNG" alt="Riesgos">
                 </div>
             </div>
 
@@ -617,14 +618,16 @@
                         manual, nuestra plataforma conecta tus datos directamente con la UE.</p>
                 </div>
                 <div class="feature-image">
-                    <img src="assets/dds.jpg"
-                        alt="Contratos">
+                    <img src="assets/dds.jpg" alt="Contratos">
                 </div>
             </div>
         </div>
     </section>
 
     <section class="text-container">
+        <div class="logo" style="color: white; margin-bottom: 20px; text-align: center;">
+            <img src="assets/iso_agropass.png" alt="AgroPass">
+        </div>
         <h4 style="text-align: center; margin-bottom: 30px; font-size: 2rem; font-weight: 800;">
             Una solución completa para EUDR</h4>
         <p style="text-align: center">
@@ -653,8 +656,7 @@
                     </div>
                 </div>
 
-                <div class="step-card"
-                    style="background-image: url(assets/Satelite2.jpg)">
+                <div class="step-card" style="background-image: url(assets/Satelite2.jpg)">
                     <div class="step-overlay"></div>
                     <div class="step-content">
                         <span class="step-number">02</span>
@@ -666,8 +668,7 @@
                     </div>
                 </div>
 
-                <div class="step-card"
-                    style="background-image: url('assets/export.jpg')">
+                <div class="step-card" style="background-image: url('assets/export.jpg')">
                     <div class="step-overlay"></div>
                     <div class="step-content">
                         <span class="step-number">03</span>
@@ -690,17 +691,26 @@
         <div class="faq-container">
             <details>
                 <summary>¿Cómo me ayuda AgroPass con el cumplimiento de EUDR?</summary>
-                <p>Automatizamos la gestión operativa que implica realizar el análisis de riesgo y la debida diligencia que pide la reglamentación.
-                     La plataforma reduce el riesgo a 0.1% con IA para garantizar la entrada de tu mercadería a la Unión Europea.</p>
+                <p>Automatizamos la gestión operativa que implica realizar el análisis de riesgo y la debida diligencia
+                    que pide la reglamentación.
+                    La plataforma reduce el riesgo a 0.1% con IA para garantizar la entrada de tu mercadería a la Unión
+                    Europea.</p>
             </details>
             <details>
                 <summary>¿Cómo garantiza AgroPass el cumplimiento?</summary>
-                <p>Utilizamos una combinación de APIs oficiales de la UE y análisis satelital de alta resolución, y análisis de riesgo en tiempo real con IA por cada cargamente para
+                <p>Utilizamos una combinación de APIs oficiales de la UE y análisis satelital de alta resolución, y
+                    análisis de riesgo en tiempo real con IA por cada cargamente para
                     asegurar que cada dato sea verídico y auditable.</p>
             </details>
             <details>
                 <summary>¿Si ya uso VISEC en Argentina, por qué necesito AgroPass?</summary>
-                <p>Aunque VISEC es una herramienta robusta para consolidar datos en Argentina, no es un sustituto automático de la responsabilidad del exportador ante la Unión Europea. Existen gestiones críticas que el sistema no realiza y que usted debe ejecutar manualmente, como generación y envío de la Declaración de Diligencia Debida, la evaluación de riesgo detallada, verificar que se respetaron los derechos de comunidades locales, documentar trazabilidad para miembros de la cadena que no esten en VISEC, asegurar y documentar que el producto verificado no se mezcló físicamente con productos de origen desconocido durante el transporte o acopio</p>
+                <p>Aunque VISEC es una herramienta robusta para consolidar datos en Argentina, no es un sustituto
+                    automático de la responsabilidad del exportador ante la Unión Europea. Existen gestiones críticas
+                    que el sistema no realiza y que usted debe ejecutar manualmente, como generación y envío de la
+                    Declaración de Diligencia Debida, la evaluación de riesgo detallada, verificar que se respetaron los
+                    derechos de comunidades locales, documentar trazabilidad para miembros de la cadena que no esten en
+                    VISEC, asegurar y documentar que el producto verificado no se mezcló físicamente con productos de
+                    origen desconocido durante el transporte o acopio</p>
             </details>
             <details>
                 <summary>¿Qué pasa si mi carga es rechazada?</summary>
@@ -769,7 +779,9 @@
             src="assets/sat_horizontal.jpg"> </img> -->
         <div class="footer-overlay"></div>
         <div class="footer-content">
-            <div class="logo" style="color: white; margin-bottom: 20px;">AGRO<span>PASS</span></div>
+            <div class="logo" style="color: white; margin-bottom: 20px;">
+                <img src="assets/logo_blanco_agropass.png" alt="AgroPass">
+            </div>
             <p>Inteligencia ambiental para el comercio global.</p>
             <p style="margin-top: 20px; font-size: 0.8rem; opacity: 0.6;">© 2026 AgroPass. Built for the future of
                 farming.</p>
