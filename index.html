@@ -216,6 +216,107 @@
             width: 100%;
         }
 
+        /* --- SECCIÓN PROBLEMA / SOLUCIÓN --- */
+        .problem-solution {
+            background-color: #ffffff;
+            margin-bottom: 80px;
+        }
+
+        .problem-row {
+            display: flex;
+            align-items: start;
+            justify-content: space-between;
+            gap: 80px;
+            margin-bottom: 20px;
+            /* Espacio entre filas */
+        }
+
+        .problem-content {
+            flex: 1;
+            max-width: 500px;
+            align-items: start;
+        }
+
+        .problem-content h3 {
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .problem-content p {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .problem-content {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .problem-content li {
+            text-align: left;
+            margin-bottom: 10px;
+        }
+
+        .problem-content ul li::before {
+            content: '\0058';
+            color: red;
+            /* Unicode character for a checkmark */
+            display: inline-block;
+            font-size: 15px;
+            /* Adjust the size as needed */
+            line-height: 1;
+            /* Adjust the line height as needed */
+            margin-right: 8px;
+            /* Adjust the spacing as needed */
+        }
+
+        .problem-content ul {
+            text-align: left;
+            list-style: none;
+            padding: 0 10px;
+            margin-bottom: 50px;
+            margin-top: 20px;
+        }
+
+        .problem-image {
+            flex: 1;
+        }
+
+        .problem-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 40px;
+            /* Bordes muy redondeados estilo Grazemate */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+        }
+
+        .problem-image img:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 992px) {
+
+            .problem-row,
+
+            .problem-content {
+                max-width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .problem-image img {
+                height: 300px;
+            }
+        }
+
         /* --- SECCIÓN TECNOLOGÍA ALTERNADA --- */
         .tech-features {
             background-color: #ffffff;
@@ -234,7 +335,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 80px;
-            margin-bottom: 100px;
+            margin-bottom: 20px;
             /* Espacio entre filas */
         }
 
@@ -281,7 +382,7 @@
 
         .feature-image img {
             width: 100%;
-            height: 400px;
+            height: 500px;
             object-fit: contain;
             border-radius: 40px;
             /* Bordes muy redondeados estilo Grazemate */
@@ -582,62 +683,140 @@
 
     <section class="box"></section>
 
+    <section class="section problem-solution">
+        <div class="container">
+            <div class="problem-row">
+                <div class="problem-content">
+                    <h3>El Problema</h3>
+                    <p> La Unión Europea ahora exige trazabilidad completa para commodities como soja, carne, café y
+                        cacao. Sin esto:
+                    </p>
+                    <ul>
+                        <li>Pierdes acceso al mercado europeo</li>
+                        <li>Tus compradores pueden rechazarte</li>
+                        <li>Las auditorías pueden volverse un cuello de botella</li>
+                    </ul>
+                    <p> La mayoría de los exportadores de LATAM hoy:
+                    </p>
+                    <ul>
+                        <li>No tienen mapeo geoespacial completo</li>
+                        <li>No puede demostrar que están "Libres de Deforestación"</li>
+                        <li>No tiene documentación lista para inspecciones</li>
+                    </ul>
+                </div>
+                <div class="problem-image">
+                    <img src="assets/EUDR.png" alt="Geolocalización de parcelas">
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="section tech-features">
         <div class="container">
-            <h2 class="section-main-title">Tecnología para el nuevo estándar global</h2>
-            
+            <h2 class="section-main-title">Solución: Tecnología para el nuevo estándar global</h2>
+
             <!-- Mapeo simple de campos -->
-            <!-- Análisis de deforestación y áreas protegidas -->
             <div class="feature-row">
                 <div class="feature-content">
                     <div class="icon-box"><i class="fas fa-satellite-dish"></i></div>
-                    <h3>Monitoreo Satelital</h3>
-                    <p>Análisis de deforestación en tiempo real con precisión milimétrica sobre cada polígono.
-                        Utilizamos constelaciones de satélites para auditar tus tierras los 365 días del año.</p>
+                    <h3>Geolocalización de Parcelas</h3>
+                    <p>Súbelas desde archivos KML/Geojson, indica las coordenadas, o dibuja el polígono manualmente en
+                        en la interfaz de la plataforma.
+                    </p>
                 </div>
                 <div class="feature-image">
-                    <img src="assets/Campo2.PNG" alt="Satelital">
+                    <img src="assets/feature_geolocalization.png" alt="Geolocalización de parcelas">
+                </div>
+            </div>
+            <!-- Análisis de deforestación y áreas protegidas -->
+            <div class="feature-row">
+                <div class="feature-content">
+                    <div class="icon-box"><i class="fas fa-fire-alt"></i></div>
+                    <h3>Análisis de Deforestación</h3>
+                    <p>Analizamos cada polígono automáticamente con precisión usando los mismos satelites que usa la UE
+                        para auditorías.
+                        Monitoreamos la deforestación, proximidad a áreas protegidas y cercanía a zonas deforestadas.
+                    </p>
+                </div>
+                <div class="feature-image">
+                    <img src="assets/feature_deforestation.png" alt="Análisis de deforestación">
                 </div>
             </div>
             <!-- Gestión documental -->
+            <div class="feature-row">
+                <div class="feature-content">
+                    <div class="icon-box"><i class="fas fa-file-contract"></i></div>
+                    <h3>Gestión Documental</h3>
+                    <p>Te ayudamos a identificar y organizar los documentos que necesitas para cada integrante de la
+                        cadena
+                        de valor según el producto y el país.</p>
+                </div>
+                <div class="feature-image">
+                    <img src="assets/feature_documentation.png" alt="Gestión Documental">
+                </div>
+            </div>
             <!-- Análisis de riesgos automático -->
             <div class="feature-row">
                 <div class="feature-content">
-                    <div class="icon-box"><i class="fas fa-shield-virus"></i></div>
+                    <div class="icon-box"><i class="fas fa-exclamation-triangle"></i></div>
                     <h3>Mitigación de Riesgos</h3>
                     <p>Alertas preventivas antes de que cualquier carga sea comprometida legalmente. Analizamos el
                         histórico y el contexto legal y social para que tu exportación sea segura.</p>
                 </div>
                 <div class="feature-image">
-                    <img src="assets/riesgos1.PNG" alt="Riesgos">
+                    <img src="assets/feature_riskanalysis.png" alt="Riesgos">
                 </div>
-            </div>            
-            <!-- Generacion del DDS -->
+            </div>
             <!-- Toda la documentación lista para auditorías -->
             <div class="feature-row">
                 <div class="feature-content">
-                    <div class="icon-box"><i class="fas fa-file-contract"></i></div>
-                    <h3>DDS Automático</h3>
-                    <p>Generación de declaraciones de debida diligencia listas para el sistema TRACES. Olvida la carga
-                        manual, nuestra plataforma conecta tus datos directamente con la UE.</p>
+                    <div class="icon-box"><i class="fas fa-book"></i></div>
+                    <h3>Exporta y Comparte Fácilmente</h3>
+                    <p>Genera con un click el repositorio de evidencia documental y la Declaración de Debida Diligencia
+                        (DDS)
+                        lista para compartir a tu cliente en la UE
+                    </p>
                 </div>
                 <div class="feature-image">
-                    <img src="assets/dds.jpg" alt="Contratos">
+                    <img src="assets/feature_vault.png" alt="Documentación para Auditorías">
                 </div>
             </div>
         </div>
     </section>
+
+    <section class="box"></section>
 
     <section class="text-container">
         <div class="logo" style="color: white; margin-bottom: 20px; text-align: center;">
             <img src="assets/iso_agropass.png" alt="AgroPass">
         </div>
         <h4 style="text-align: center; margin-bottom: 30px; font-size: 2rem; font-weight: 800;">
-            Una solución completa para EUDR</h4>
-        <p style="text-align: center">
-            AgroPass te ayuda a gestionar EUDR de principio a fin. Automatizamos la recolección de datos, analizamos el
-            riesgo y documentación de cada uno de tus proveedores, mapeamos y monitoriamos los lotes, te ayudamos a
-            mitigar el riesgo y te dejamos todo listo para reportes y auditorías</p>
+            Estamos para ayudarte</h4>
+        <p style="text-align: left; margin-bottom: 20px;">
+            El mapeo de toda la cadena de valor, la relevancia y validez de la documentación de productores e
+            intermediarios, precisión en la geolocalización
+            y la comunicación eficiente y en tiempo para obtener la información necesaria se traduce en en gran fricción
+            operativa para los exportadores.
+        </p>
+        <p style="text-align: left; margin-bottom: 20px">
+            Es por eso que con nuestro sevicio concierge te ayudamos a orientar a tus proveedores al mismo tiempo que
+            trabajmos con ellos para obtener para
+            tu empresa toda la información necesaria para dejar tu cadena "Lista para EUDR" sin sumarle trabajo extra a
+            tu equipo.
+        </p>
+        <p style="text-align: left; margin-bottom: 20px">
+            Como funciona:
+        </p>
+        <ul style="text-align: left; margin-bottom: 50px;">
+            <li>Relevamos tu cadena de valor (campos, productores, intermediarios)</li>
+            <li>Estructuramos la información (geolocalización + trazabilidad)</li>
+            <li>Validamos los datos y la documentación según exige la EUDR</li>
+            <li>Dejamos todo listo para compartir con tus compradores en la UE</li>
+        </ul>
+        <div class="hero-btns" style="text-align: center">
+            <a href="#contacto" class="btn btn-main">Me interesa</a>
+        </div>
+
     </section>
 
     <section class="box"></section>
@@ -654,7 +833,7 @@
                         <span class="step-number">01</span>
                         <h3>Conecta</h3>
                         <div class="step-description">
-                            <p>Integra tus proveedores y carga tu documentación y datos de geolocalización fácilmente
+                            <p>Carga los datos de tus proveedores, documentación y datos de geolocalización fácilmente
                             </p>
                         </div>
                     </div>
@@ -666,7 +845,7 @@
                         <span class="step-number">02</span>
                         <h3>Verifica</h3>
                         <div class="step-description">
-                            <p>Nuestra IA audita el cumplimiento de cada hectárea y la integridad de cada documento que
+                            <p>Nuestra plataforma audita el cumplimiento de cada hectárea y la integridad de cada documento que
                                 pide la EUDR</p>
                         </div>
                     </div>
@@ -678,8 +857,8 @@
                         <span class="step-number">03</span>
                         <h3>Exporta</h3>
                         <div class="step-description">
-                            <p>Genera el draft de la DDS con un click y obtén toda la documentación
-                                organizada y almacenada por envío, lista para posibles auditorías</p>
+                            <p>Genera y comparte el draft de la DDS con un click y toda la documentación
+                                organizada y almacenada por envío, lista para auditorías</p>
                         </div>
                     </div>
                 </div>
@@ -740,8 +919,8 @@
     <section id="contacto" class="section container">
         <div class="contact-wrapper">
             <div id="contact-info">
-                <h2 style="font-size: 3rem; margin-bottom: 20px;">¿Estás preparado para la EUDR?</h2>
-                <p style="opacity: 0.7;">Agendemos una demo de 15m para entender como Agropass puede facilitar la gestión de la normativa.</p>
+                <h2 style="font-size: 3rem; margin-bottom: 20px;">Listo para la EUDR?</h2>
+                <p style="opacity: 0.7;">Deja tu cadena lista sin complicar a tu equipo.</p>
             </div>
 
             <form id="form-eudr">
